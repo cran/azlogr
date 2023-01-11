@@ -1,0 +1,91 @@
+---
+title: "How to use azlogr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to use azlogr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Three things you should consider to set up to be able to use this package seamlessly:  
+
+1. Configure environment variables to fetch the 'Azure Log Analytics' workspace ID & shared key.  
+
+    a. Ideally, this needs to be done outside 'R'. But, you may create a `.Rprofile` file in your project root, and define the environment variable using `Sys.setenv` function. Example contents of the `.Rprofile` can be as below. Please note, this is not the suggested way, ideally you should define the environment variables via some `secret`, that depends on your working environment. 
+
+```{r environment}
+Sys.setenv(AZ_LOG_ID = "enter-your-Azure-Log-Analytics-workspace-id")
+Sys.setenv(AZ_LOG_KEY = "enter-your-Azure-Log-Analytics-shared-key")
+```
+
+2. Identify any meta-data which needs to be collected and logged. There are some predefined information which are collected by the function `logger::get_logger_meta_variables`, which are reused in this package. However, by default not all are used while logging. You may also add some other meta-data as per the requirement, which can be be configured in one step using `set_log_config` function of this package. 
+```{r metadata}
+library(azlogr)
+# Collect some additional meta-data on top of the default selection level, time, msg.
+# These are captured from the auto-collected components by logger::get_logger_meta_variables.
+set_log_config(log_fields = c("level", "time", "msg", "user", "pid"))
+
+# Some additional meta-data to be collected.
+set_log_config(
+  log_fields = c("level", "time", "msg"),
+  additional_fields = list(country = "in", id = 123)
+)
+
+# Change the ordering in which the log message is displayed on console.
+# Newly added meta-data can also be added in the log_fields arguments to change display order.
+set_log_config(
+  log_fields = c("country", "id", "time", "level", "msg"),
+  additional_fields = list(country = "in", id = 123)
+)
+```
+
+3. By default, logging to 'Azure Log Analytics' is enabled, that can be controlled via `log_to_azure` argument of `set_log_config` function. The custom logging table name in Azure Log Analytics workspace can be configured via `log_type` argument of the same `set_log_config` function. And finally, the workspace ID, shared key of Azure Log Analytics should be stored in some environment variable, by default which are `AZ_LOG_ID` & `AZ_LOG_KEY`. These can be changed by `customer_id_env` and `shared_key_env` arguments of the `set_log_config` function. An example configuration can be done in one-time step as below:
+```{r setup}
+set_log_config(
+  log_fields = c("country", "id", "time", "level", "msg"),
+  additional_fields = list(country = "in", id = 123),
+  log_type = "custom_table_r",
+  customer_id_env = "ENV_WORKSPACE_ID",
+  shared_key_env = "ENV_SHARED_KEY"
+)
+```
+
+*All the configurations can be done by doing the one-time step* using `set_log_config` function. And then logging can be done very easily by just using the wrapper functions defined for each log level.
+```{r logging}
+# Add new meta-data as `country = "in"` and `id = 123`.
+# Defining the fields to be reported should be: `country`, `id`, `time`,
+# `level`, and `msg`. Note that, you may change the order of these fields if
+# needed.
+set_log_config(
+  log_fields = c("country", "id", "time", "level", "msg"),
+  additional_fields = list(country = "in", id = 123),
+  log_to_azure = FALSE
+)
+
+# Once the configuration is done, it is easy to just provide the required
+# message using appropriate wrapper functions: logger_info, logger_warn,
+# logger_error, etc.
+logger_info("log information")
+logger_warn("log warning")
+```
+
+
+Lastly, the logging threshold can be defined to limit the output using the `logger::log_threshold` function.
+```{r threshold}
+logger::log_threshold(logger::WARN)
+# Info is not logged when threshold is WARN
+logger_info("log information")
+logger_warn("log warning")
+
+# Change the threshold
+logger::log_threshold(logger::INFO)
+# Info is logged now when threshold is INFO
+logger_info("log information")
+```
