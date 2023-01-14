@@ -116,6 +116,9 @@ without the need of specifying them every time it is triggered.
 fetched from environment variables for security purpose. It is not
 a good practice to specify them explicitly. Using environment variable
 is one easy approach to potentially hide it from unintentional user.
+\item It may take ~5–10 minutes to see the logging messages on the 'Azure
+Log Analytics' portal after the first time a message is posted to a new
+custom log table.
 }
 }
 \note{

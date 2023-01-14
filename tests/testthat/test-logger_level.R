@@ -13,7 +13,9 @@ test_that("posting to AZ log analytics works", {
 })
 test_that("catch error as warn if POST to AZ unsuccessful, console print ok", {
   expect_warning(logger_level(logger::INFO, "logging message",
-                              log_to_azure = TRUE),
+                              log_to_azure = TRUE,
+                              log_customer_id = "abcd",
+                              log_shared_key = "abcd"),
                  "Some error happened while sending POST request",
                  ignore.case = TRUE)
   expect_match(capture.output(logger_info("logging message info",
@@ -45,16 +47,28 @@ test_that("additional field works", {
   set_log_config()
 })
 test_that("enforce ascii works", {
+  non_ascii_raw <- raw(2)
+  non_ascii_raw[1] <- as.raw(0xc5)
+  non_ascii_raw[2] <- as.raw(0xbb)
   set_log_config(enforce_ascii = TRUE)
-  expect_match(capture.output(logger_info("logging non-ascii Żzz",
-                                          log_to_azure = FALSE),
-                              type = "message"),
-               "logging non-ascii <U\\+017B>zz")
+  expect_match(
+    capture.output(
+      logger_info(paste0("non-ASCII forced to ASCII ",
+                         rawToChar(non_ascii_raw)),
+                  log_to_azure = FALSE),
+      type = "message"
+    ),
+    "non-ASCII forced to ASCII <U\\+017B>"
+  )
   set_log_config(enforce_ascii = FALSE)
-  expect_match(capture.output(logger_info("logging non-ascii Żzz",
-                                          log_to_azure = FALSE),
-                              type = "message"),
-               "logging non-ascii Żzz")
+  expect_match(
+    capture.output(
+      logger_info(paste0("non-ASCII as-is ", rawToChar(non_ascii_raw)),
+                  log_to_azure = FALSE),
+      type = "message"
+    ),
+    paste0("non-ASCII as-is ", rawToChar(non_ascii_raw))
+  )
   set_log_config()
 })
 test_that("additional meta vars error catching works", {
@@ -112,4 +126,21 @@ test_that("logging level captured properly", {
                                           log_to_azure = FALSE),
                               type = "message"),
                "level.+FATAL")
+})
+test_that("posting to AZ considers log threshold", {
+  logger::log_threshold(logger::INFO)
+  mockery::stub(logger_level, ".post_data", list(status_code = 300))
+  mockery::stub(logger_level, "httr::content", "testmock")
+  expect_warning(logger_level(logger::INFO, "logging message info",
+                              log_to_azure = TRUE),
+                 "Could not post to 'Azure Log Analytics'")
+  logger::log_threshold(logger::WARN)
+  expect_warning(logger_level(logger::INFO, "logging message info",
+                              log_to_azure = TRUE),
+                 NA)
+})
+test_that("no logging message does not throw error", {
+  logger::log_threshold(logger::INFO)
+  expect_error(logger_level(logger::INFO, log_to_azure = FALSE), NA)
+  expect_warning(logger_level(logger::WARN, log_to_azure = FALSE), NA)
 })

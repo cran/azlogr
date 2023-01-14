@@ -5,8 +5,8 @@ knitr::opts_chunk$set(
 )
 
 ## ----environment--------------------------------------------------------------
-Sys.setenv(AZ_LOG_ID = "enter-your-Azure-Log-Analytics-workspace-id")
-Sys.setenv(AZ_LOG_KEY = "enter-your-Azure-Log-Analytics-shared-key")
+Sys.setenv(AZ_LOG_ID = "<enter-your-Azure-Log-Analytics-workspace-id>")
+Sys.setenv(AZ_LOG_KEY = "<enter-your-Azure-Log-Analytics-shared-key>")
 
 ## ----metadata-----------------------------------------------------------------
 library(azlogr)
@@ -51,16 +51,53 @@ set_log_config(
 # message using appropriate wrapper functions: logger_info, logger_warn,
 # logger_error, etc.
 logger_info("log information")
+#> {"country":"in","id":123,"time":"2023-01-11 13:15:01","level":"INFO","msg":"log information"}
 logger_warn("log warning")
+#> {"country":"in","id":123,"time":"2023-01-11 13:15:02","level":"WARN","msg":"log warning"}
 
 ## ----threshold----------------------------------------------------------------
 logger::log_threshold(logger::WARN)
 # Info is not logged when threshold is WARN
 logger_info("log information")
 logger_warn("log warning")
+#> {"country":"in","id":123,"time":"2023-01-11 13:15:03","level":"WARN","msg":"log warning"}
 
 # Change the threshold
 logger::log_threshold(logger::INFO)
 # Info is logged now when threshold is INFO
 logger_info("log information")
+#> {"country":"in","id":123,"time":"2023-01-11 13:15:03","level":"INFO","msg":"log information"}
+
+## ----example, eval = FALSE----------------------------------------------------
+#  # Azure Log Analytics workspace id and shared key are fetched
+#  # from environment variables.
+#  # `Sys.setenv` is used only for demonstration purpose!!
+#  Sys.setenv(AZ_LOG_ID = "<enter-your-Azure-Log-Analytics-workspace-id>")
+#  Sys.setenv(AZ_LOG_KEY = "<enter-your-Azure-Log-Analytics-shared-key>")
+#  
+#  library(azlogr)
+#  
+#  # Optionally, add additional meta-data, `country` and `id`, to be collected
+#  # while logging, on top of the default fields - 'level', 'time', 'msg'.
+#  set_log_config(
+#    log_fields = c("level", "time", "msg"),
+#    additional_fields = list(country = "in", id = 123)
+#  )
+#  
+#  # Use logger_* functions with appropriate logging level to log.
+#  # If POST is successful, then it will be available in custom log table on
+#  # Azure Log Analytics, by default table name will be `log_from_r`_CL (_CL is
+#  # added by Azure for any custom log table)
+#  logger_info("log info sent to Azure")
+#  #> {"level":"INFO","time":"2023-01-11 13:15:04","msg":"log info sent to Azure","country":"in","id":123}
+#  
+#  # If the POST request is unsuccessful due to Azure credential issue, then log
+#  # message is displayed on console and a warning is generated with error details.
+#  logger_info("log info sent to Azure")
+#  #> {"level":"INFO","time":"2023-01-11 13:15:04","msg":"log info sent to Azure","country":"in","id":123}
+#  #> Warning message:
+#  #> In logger_level(logger::INFO, ...) :
+#  #>   Some error happened while sending POST request to 'Azure Log Analytics' workspace.
+#  #> Error message: Error in curl::curl_fetch_memory(url, handle = handle) :
+#  #>   Could not resolve host: abcd.ods.opinsights.azure.com
 

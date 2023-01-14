@@ -340,6 +340,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
+<div id="configuration-steps" class="section level1">
+<h1>Configuration steps</h1>
 <p>Three things you should consider to set up to be able to use this
 package seamlessly:</p>
 <ol style="list-style-type: decimal">
@@ -355,8 +357,8 @@ variables via some <code>secret</code>, that depends on your working
 environment.</li>
 </ol></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;enter-your-Azure-Log-Analytics-workspace-id&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;enter-your-Azure-Log-Analytics-shared-key&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Identify any meta-data which needs to be collected and logged. There
 are some predefined information which are collected by the function
@@ -422,18 +424,59 @@ each log level.</p>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># message using appropriate wrapper functions: logger_info, logger_warn,</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># logger_error, etc.</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span></code></pre></div>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:01&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:02&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span></code></pre></div>
 <p>Lastly, the logging threshold can be defined to limit the output
 using the <code>logger::log_threshold</code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>WARN)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Info is not logged when threshold is WARN</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the threshold</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>INFO)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Info is logged now when threshold is INFO</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span></code></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the threshold</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>INFO)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Info is logged now when threshold is INFO</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span></code></pre></div>
+</div>
+<div id="example-use-case" class="section level1">
+<h1>Example use case</h1>
+<p>Below is an example workflow of configuring the logging mechanism and
+using <code>logger_*</code> functions to log.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Azure Log Analytics workspace id and shared key are fetched</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from environment variables.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># `Sys.setenv` is used only for demonstration purpose!!</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(azlogr)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add additional meta-data, `country` and `id`, to be collected</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># while logging, on top of the default fields - &#39;level&#39;, &#39;time&#39;, &#39;msg&#39;.</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Use logger_* functions with appropriate logging level to log.</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># If POST is successful, then it will be available in custom log table on</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Azure Log Analytics, by default table name will be `log_from_r`_CL (_CL is</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># added by Azure for any custom log table)</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># If the POST request is unsuccessful due to Azure credential issue, then log</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># message is displayed on console and a warning is generated with error details.</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning message:</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; In logger_level(logger::INFO, ...) :</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Some error happened while sending POST request to &#39;Azure Log Analytics&#39; workspace.</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error message: Error in curl::curl_fetch_memory(url, handle = handle) :</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Could not resolve host: abcd.ods.opinsights.azure.com</span></span></code></pre></div>
+</div>
 
 
 

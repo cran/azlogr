@@ -170,7 +170,8 @@
     }
     sapply(msg, function(msg) {
       if (enforce_ascii_msg) {
-        msg <- iconv(msg, to = "ASCII", sub = "Unicode")
+        msg <- iconv(enc2native(msg), from = "UTF-8",
+                     to = "ASCII", sub = "Unicode")
       }
       jsonlite::toJSON(
         c(json, list(msg = msg))[unique(c(log_fields,
@@ -231,6 +232,9 @@
 #'      fetched from environment variables for security purpose. It is not
 #'      a good practice to specify them explicitly. Using environment variable
 #'      is one easy approach to potentially hide it from unintentional user.
+#'     \item It may take ~5–10 minutes to see the logging messages on the 'Azure
+#'      Log Analytics' portal after the first time a message is posted to a new
+#'      custom log table.
 #'     }
 #' @export
 #' @family logging functions
@@ -264,20 +268,22 @@ logger_level <- function(
   logger::log_level(...)
   if (log_to_azure) {
     body <- capture.output(logger::log_level(...), type = "message")
-    response <- try(.post_data(customer_id = log_customer_id,
-                               shared_key = log_shared_key,
-                               body, log_type), silent = TRUE)
-    if (inherits(response, "try-error")) {
-      warning(paste0("Some error happened while sending POST request ",
-                     "to 'Azure Log Analytics' workspace. Error message: ",
-                     as.character(response)))
-    } else if (response$status_code >= 200 && response$status_code <= 299) {
-      invisible(response)
-    } else {
-      warning(paste0("Could not post to 'Azure Log Analytics', status code: ",
-                     response$status_code, ".", "\n",
-                     "Response received: ",
-                     httr::content(response, as = "text")))
+    if (!identical(body, character(0))) {
+      response <- try(.post_data(customer_id = log_customer_id,
+                                 shared_key = log_shared_key,
+                                 body, log_type), silent = TRUE)
+      if (inherits(response, "try-error")) {
+        warning(paste0("Some error happened while sending POST request ",
+                       "to 'Azure Log Analytics' workspace. Error message: ",
+                       as.character(response)))
+      } else if (response$status_code >= 200 && response$status_code <= 299) {
+        invisible(response)
+      } else {
+        warning(paste0("Could not post to 'Azure Log Analytics', status code: ",
+                       response$status_code, ".", "\n",
+                       "Response received: ",
+                       httr::content(response, as = "text")))
+      }
     }
   }
 }

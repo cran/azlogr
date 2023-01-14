@@ -1,3 +1,9 @@
+# azlogr 0.0.4
+
+* Bug fix - not trying to post to 'Azure Log Analytics' workspace when logging level does not meet the logging threshold criteria. Earlier it was posting an empty string in that scenario, that is fixed.
+* Bug fix - `enforce_ascii` as `TRUE` works on systems having encoding ISO8859-1 as well. 
+* Minor documentation update.
+
 # azlogr 0.0.3
 
 * Added ability to extract all the configurations at once in `get_log_config` function.
