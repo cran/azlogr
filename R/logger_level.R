@@ -73,11 +73,11 @@
 #'     \code{\link[logger]{log_layout}} function.
 #'
 .add_meta_variables <- function(additional_fields = NULL,
-                               log_level = NULL,
-                               namespace = NA_character_,
-                               .logcall = sys.call(),
-                               .topcall = sys.call(-1),
-                               .topenv = parent.frame()) {
+                                log_level = NULL,
+                                namespace = NA_character_,
+                                .logcall = sys.call(),
+                                .topcall = sys.call(-1),
+                                .topenv = parent.frame()) {
   original_meta <- logger::get_logger_meta_variables(
     log_level = log_level,
     namespace = namespace,
@@ -86,7 +86,7 @@
     .topenv = .topenv
   )
   if (!is.null(additional_fields) &&
-      !is.vector(additional_fields, mode = "list")) {
+        !is.vector(additional_fields, mode = "list")) {
     error_msg <- paste0("additional_fields argument is not of expected ",
                         "datatype. It should be a vector of type list.")
     stop(error_msg)
@@ -162,9 +162,9 @@
                      .topenv = parent.frame()) {
 
     json <- .add_meta_variables(additional_fields,
-                               log_level = level, namespace = namespace,
-                               .logcall = .logcall, .topcall = .topcall,
-                               .topenv = .topenv)
+                                log_level = level, namespace = namespace,
+                                .logcall = .logcall, .topcall = .topcall,
+                                .topenv = .topenv)
     if (enforce_tz_utc) {
       json[["time"]] <- as.POSIXlt(json[["time"]], tz = "UTC")
     }
@@ -251,16 +251,16 @@
 #' logger_level(logger::INFO, "logging message", log_to_azure = FALSE)
 #'
 logger_level <- function(
-    ...,
-    log_fields = get_log_config("log_fields"),
-    additional_fields = get_log_config("additional_fields"),
-    enforce_ascii_msg = get_log_config("enforce_ascii_msg"),
-    enforce_tz_utc = get_log_config("enforce_tz_utc"),
-    log_to_azure = get_log_config("log_to_azure"),
-    log_type = get_log_config("log_type"),
-    log_customer_id = Sys.getenv(get_log_config("customer_id_env"), "abcd"),
-    log_shared_key = Sys.getenv(get_log_config("shared_key_env"), "abcd")
-    ) {
+  ...,
+  log_fields = get_log_config("log_fields"),
+  additional_fields = get_log_config("additional_fields"),
+  enforce_ascii_msg = get_log_config("enforce_ascii_msg"),
+  enforce_tz_utc = get_log_config("enforce_tz_utc"),
+  log_to_azure = get_log_config("log_to_azure"),
+  log_type = get_log_config("log_type"),
+  log_customer_id = Sys.getenv(get_log_config("customer_id_env"), "abcd"),
+  log_shared_key = Sys.getenv(get_log_config("shared_key_env"), "abcd")
+) {
   logger::log_layout(
     .layout_json_custom(log_fields, additional_fields,
                         enforce_ascii_msg, enforce_tz_utc)

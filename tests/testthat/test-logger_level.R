@@ -47,19 +47,11 @@ test_that("additional field works", {
   set_log_config()
 })
 test_that("enforce ascii works", {
-  non_ascii_raw <- raw(2)
-  non_ascii_raw[1] <- as.raw(0xc5)
-  non_ascii_raw[2] <- as.raw(0xbb)
-  set_log_config(enforce_ascii = TRUE)
-  expect_match(
-    capture.output(
-      logger_info(paste0("non-ASCII forced to ASCII ",
-                         rawToChar(non_ascii_raw)),
-                  log_to_azure = FALSE),
-      type = "message"
-    ),
-    "non-ASCII forced to ASCII <U\\+017B>"
-  )
+  non_ascii_raw <- raw(3)
+  non_ascii_raw[1] <- as.raw(0xe2)
+  non_ascii_raw[2] <- as.raw(0x99)
+  non_ascii_raw[3] <- as.raw(0xaa)
+
   set_log_config(enforce_ascii = FALSE)
   expect_match(
     capture.output(
@@ -69,6 +61,30 @@ test_that("enforce ascii works", {
     ),
     paste0("non-ASCII as-is ", rawToChar(non_ascii_raw))
   )
+
+  set_log_config(enforce_ascii = TRUE)
+  expect_no_error(
+    logger_info(paste0("non-ASCII forced to ASCII ",
+                       rawToChar(non_ascii_raw)),
+                log_to_azure = FALSE)
+  )
+  skip_if(
+    iconv(
+      enc2native(rawToChar(non_ascii_raw)),
+      from = "UTF-8", to = "ASCII", sub = "Unicode"
+    ) != "<U+266A>",
+    message = "iconv didn't convert music to <U+266A>, also no error"
+  )
+  expect_match(
+    capture.output(
+      logger_info(paste0("non-ASCII forced to ASCII ",
+                         rawToChar(non_ascii_raw)),
+                  log_to_azure = FALSE),
+      type = "message"
+    ),
+    "non-ASCII forced to ASCII <U\\+266A>"
+  )
+
   set_log_config()
 })
 test_that("additional meta vars error catching works", {
@@ -104,26 +120,26 @@ test_that("logging level captured properly", {
                               type = "message"),
                "level.+WARN")
   expect_match(capture.output(logger_error("logging message",
-                                          log_to_azure = FALSE),
+                                           log_to_azure = FALSE),
                               type = "message"),
                "level.+ERROR")
   expect_match(capture.output(logger_success("logging message",
-                                          log_to_azure = FALSE),
+                                             log_to_azure = FALSE),
                               type = "message"),
                "level.+SUCCESS")
   logger::log_threshold(logger::DEBUG)
   expect_match(capture.output(logger_debug("logging message",
-                                          log_to_azure = FALSE),
+                                           log_to_azure = FALSE),
                               type = "message"),
                "level.+DEBUG")
   logger::log_threshold(logger::TRACE)
   expect_match(capture.output(logger_trace("logging message",
-                                          log_to_azure = FALSE),
+                                           log_to_azure = FALSE),
                               type = "message"),
                "level.+TRACE")
   logger::log_threshold(logger::INFO)
   expect_match(capture.output(logger_fatal("logging message",
-                                          log_to_azure = FALSE),
+                                           log_to_azure = FALSE),
                               type = "message"),
                "level.+FATAL")
 })

@@ -1,3 +1,7 @@
+# azlogr 0.0.5
+
+* Slightly modified testing strategy for enforcing ASCII of logging messages because of different implementation of `base::iconv` by OS type. No change for end users.
+
 # azlogr 0.0.4
 
 * Bug fix - not trying to post to 'Azure Log Analytics' workspace when logging level does not meet the logging threshold criteria. Earlier it was posting an empty string in that scenario, that is fixed.

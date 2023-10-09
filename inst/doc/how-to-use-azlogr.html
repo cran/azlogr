@@ -357,8 +357,8 @@ variables via some <code>secret</code>, that depends on your working
 environment.</li>
 </ol></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Identify any meta-data which needs to be collected and logged. There
 are some predefined information which are collected by the function
@@ -368,23 +368,23 @@ also add some other meta-data as per the requirement, which can be be
 configured in one step using <code>set_log_config</code> function of
 this package.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(azlogr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect some additional meta-data on top of the default selection level, time, msg.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># These are captured from the auto-collected components by logger::get_logger_meta_variables.</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(<span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>, <span class="st">&quot;user&quot;</span>, <span class="st">&quot;pid&quot;</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Some additional meta-data to be collected.</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the ordering in which the log message is displayed on console.</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Newly added meta-data can also be added in the log_fields arguments to change display order.</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(azlogr)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># Collect some additional meta-data on top of the default selection level, time, msg.</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># These are captured from the auto-collected components by logger::get_logger_meta_variables.</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">set_log_config</span>(<span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>, <span class="st">&quot;user&quot;</span>, <span class="st">&quot;pid&quot;</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co"># Some additional meta-data to be collected.</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co"># Change the ordering in which the log message is displayed on console.</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># Newly added meta-data can also be added in the log_fields arguments to change display order.</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>By default, logging to ‘Azure Log Analytics’ is enabled, that can be
 controlled via <code>log_to_azure</code> argument of
@@ -399,83 +399,83 @@ can be changed by <code>customer_id_env</code> and
 function. An example configuration can be done in one-time step as
 below:</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_type =</span> <span class="st">&quot;custom_table_r&quot;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">customer_id_env =</span> <span class="st">&quot;ENV_WORKSPACE_ID&quot;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">shared_key_env =</span> <span class="st">&quot;ENV_SHARED_KEY&quot;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">log_type =</span> <span class="st">&quot;custom_table_r&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">customer_id_env =</span> <span class="st">&quot;ENV_WORKSPACE_ID&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">shared_key_env =</span> <span class="st">&quot;ENV_SHARED_KEY&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>)</span></code></pre></div>
 <p><em>All the configurations can be done by doing the one-time
 step</em> using <code>set_log_config</code> function. And then logging
 can be done very easily by just using the wrapper functions defined for
 each log level.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new meta-data as `country = &quot;in&quot;` and `id = 123`.</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining the fields to be reported should be: `country`, `id`, `time`,</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># `level`, and `msg`. Note that, you may change the order of these fields if</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># needed.</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>),</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_to_azure =</span> <span class="cn">FALSE</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Once the configuration is done, it is easy to just provide the required</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># message using appropriate wrapper functions: logger_info, logger_warn,</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># logger_error, etc.</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:01&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:02&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Add new meta-data as `country = &quot;in&quot;` and `id = 123`.</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># Defining the fields to be reported should be: `country`, `id`, `time`,</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co"># `level`, and `msg`. Note that, you may change the order of these fields if</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># needed.</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;country&quot;</span>, <span class="st">&quot;id&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;level&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="at">log_to_azure =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># Once the configuration is done, it is easy to just provide the required</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co"># message using appropriate wrapper functions: logger_info, logger_warn,</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># logger_error, etc.</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:01&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:02&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span></code></pre></div>
 <p>Lastly, the logging threshold can be defined to limit the output
 using the <code>logger::log_threshold</code> function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>WARN)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Info is not logged when threshold is WARN</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the threshold</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>INFO)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Info is logged now when threshold is INFO</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>WARN)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># Info is not logged when threshold is WARN</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="fu">logger_warn</span>(<span class="st">&quot;log warning&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;WARN&quot;,&quot;msg&quot;:&quot;log warning&quot;}</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Change the threshold</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>logger<span class="sc">::</span><span class="fu">log_threshold</span>(logger<span class="sc">::</span>INFO)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Info is logged now when threshold is INFO</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log information&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; {&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123,&quot;time&quot;:&quot;2023-01-11 13:15:03&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;msg&quot;:&quot;log information&quot;}</span></span></code></pre></div>
 </div>
 <div id="example-use-case" class="section level1">
 <h1>Example use case</h1>
 <p>Below is an example workflow of configuring the logging mechanism and
 using <code>logger_*</code> functions to log.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Azure Log Analytics workspace id and shared key are fetched</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from environment variables.</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># `Sys.setenv` is used only for demonstration purpose!!</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(azlogr)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, add additional meta-data, `country` and `id`, to be collected</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># while logging, on top of the default fields - &#39;level&#39;, &#39;time&#39;, &#39;msg&#39;.</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Use logger_* functions with appropriate logging level to log.</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># If POST is successful, then it will be available in custom log table on</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Azure Log Analytics, by default table name will be `log_from_r`_CL (_CL is</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># added by Azure for any custom log table)</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># If the POST request is unsuccessful due to Azure credential issue, then log</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># message is displayed on console and a warning is generated with error details.</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning message:</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; In logger_level(logger::INFO, ...) :</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Some error happened while sending POST request to &#39;Azure Log Analytics&#39; workspace.</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error message: Error in curl::curl_fetch_memory(url, handle = handle) :</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Could not resolve host: abcd.ods.opinsights.azure.com</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Azure Log Analytics workspace id and shared key are fetched</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># from environment variables.</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># `Sys.setenv` is used only for demonstration purpose!!</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_ID =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-workspace-id&gt;&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">AZ_LOG_KEY =</span> <span class="st">&quot;&lt;enter-your-Azure-Log-Analytics-shared-key&gt;&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">library</span>(azlogr)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Optionally, add additional meta-data, `country` and `id`, to be collected</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># while logging, on top of the default fields - &#39;level&#39;, &#39;time&#39;, &#39;msg&#39;.</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="fu">set_log_config</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="at">log_fields =</span> <span class="fu">c</span>(<span class="st">&quot;level&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;msg&quot;</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  <span class="at">additional_fields =</span> <span class="fu">list</span>(<span class="at">country =</span> <span class="st">&quot;in&quot;</span>, <span class="at">id =</span> <span class="dv">123</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># Use logger_* functions with appropriate logging level to log.</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># If POST is successful, then it will be available in custom log table on</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># Azure Log Analytics, by default table name will be `log_from_r`_CL (_CL is</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co"># added by Azure for any custom log table)</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co"># If the POST request is unsuccessful due to Azure credential issue, then log</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co"># message is displayed on console and a warning is generated with error details.</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="fu">logger_info</span>(<span class="st">&quot;log info sent to Azure&quot;</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; {&quot;level&quot;:&quot;INFO&quot;,&quot;time&quot;:&quot;2023-01-11 13:15:04&quot;,&quot;msg&quot;:&quot;log info sent to Azure&quot;,&quot;country&quot;:&quot;in&quot;,&quot;id&quot;:123}</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; Warning message:</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; In logger_level(logger::INFO, ...) :</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt;   Some error happened while sending POST request to &#39;Azure Log Analytics&#39; workspace.</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; Error message: Error in curl::curl_fetch_memory(url, handle = handle) :</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt;   Could not resolve host: abcd.ods.opinsights.azure.com</span></span></code></pre></div>
 </div>
 
 
