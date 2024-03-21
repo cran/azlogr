@@ -1,6 +1,6 @@
 Package: azlogr
 Title: Logging in 'R' and Post to 'Azure Log Analytics' Workspace
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: 
     person("Vivek", "Atal", , "atalvivek@yahoo.co.in", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9948-7458"))
@@ -18,8 +18,8 @@ RoxygenNote: 7.2.3
 Imports: caTools, digest, httr (>= 1.0.0), jsonlite, logger (>= 0.2.0)
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-10-05 01:29:09 UTC; atal
+Packaged: 2024-03-21 04:04:40 UTC; atal
 Author: Vivek Atal [aut, cre] (<https://orcid.org/0000-0002-9948-7458>)
 Maintainer: Vivek Atal <atalvivek@yahoo.co.in>
 Repository: CRAN
-Date/Publication: 2023-10-09 12:20:10 UTC
+Date/Publication: 2024-03-21 04:20:05 UTC

@@ -12,13 +12,13 @@ status](https://www.r-pkg.org/badges/version/azlogr)](https://CRAN.R-project.org
 [![Codecov test
 coverage](https://codecov.io/gh/atalv/azlogr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/atalv/azlogr?branch=main)
 [![R-CMD-check](https://github.com/atalv/azlogr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/atalv/azlogr/actions/workflows/R-CMD-check.yaml)
-[![](https://cranlogs.r-pkg.org/badges/azlogr?color=lightgrey)](https://cran.r-project.org/package=azlogr)
+[![](https://cranlogs.r-pkg.org/badges/azlogr?color=blue)](https://cran.r-project.org/package=azlogr)
 <!-- badges: end -->
 
 The goal of `azlogr` is to enable logging in ‘R’ and easily send the
 logging messages to ‘Azure Log Analytics’ workspace in real-time. It
 also shows the logging message on ‘R’ console, which makes it easier to
-see the logs in the same pace where ‘R’ codes are executed. It will be
+see the logs in the same place where ‘R’ codes are executed. It will be
 easier for somebody to retrieve the historical logs in ‘Azure Log
 Analytics’, if needed, and compare.
 

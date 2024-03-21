@@ -1,3 +1,8 @@
+# azlogr 0.0.6
+
+* Updated testing strategy for empty logging message. No change for end users.
+* Fixed a typo on README.
+
 # azlogr 0.0.5
 
 * Slightly modified testing strategy for enforcing ASCII of logging messages because of different implementation of `base::iconv` by OS type. No change for end users.

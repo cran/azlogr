@@ -1,10 +1,10 @@
-3288fec348323a533a5e58663201d12b *DESCRIPTION
+c55a47cfabb52910c6afbd58e9a4adc7 *DESCRIPTION
 4d32a1fc2ab62db368342f85063e0c37 *LICENSE
 5a5f24d4be21158096ffdafad05c894a *NAMESPACE
-54e5435dacbc147280547692a6022f84 *NEWS.md
+0dcfc9f9db7f1241e3624ccb421c751d *NEWS.md
 12e3b70abeb134337a10ba6cb7a8d603 *R/logger_level.R
 97ea3eef8ffbb96b06d531b2f9ee47ab *R/set_log_config.R
-a266e818cb1de6fc2c41bd38262da239 *README.md
+ffa136dcfe4405c684d3edbc2d504f32 *README.md
 baba962e0625ff170fc82bb2e722e9e7 *build/vignette.rds
 bd9e47e555b189cfa8e90d6d561ac6bb *inst/doc/how-to-use-azlogr.R
 ac8881eb6b82276c6e57dbb7e8dac9d5 *inst/doc/how-to-use-azlogr.Rmd
@@ -17,6 +17,6 @@ e5c487b33ad4d617a96b5584f8129023 *man/dot-layout_json_custom.Rd
 bb26bebb6f657e757bdaacc0c66d725e *man/logging.Rd
 d68a052dcc0f01e350cc2fd029d8ac68 *man/set_log_config.Rd
 7d8f99f2ee4fbe5745157c823868756d *tests/testthat.R
-c2e57531a9572205c67ba26ed5dfd040 *tests/testthat/test-logger_level.R
+4c741328c66a7453c35779580b9c1173 *tests/testthat/test-logger_level.R
 dd449384fa17fe11bed222c49a96fdc9 *tests/testthat/test-set_log_config.R
 ac8881eb6b82276c6e57dbb7e8dac9d5 *vignettes/how-to-use-azlogr.Rmd

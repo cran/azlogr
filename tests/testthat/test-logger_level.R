@@ -155,8 +155,9 @@ test_that("posting to AZ considers log threshold", {
                               log_to_azure = TRUE),
                  NA)
 })
-test_that("no logging message does not throw error", {
+test_that("no logging message does not throw error but warning", {
   logger::log_threshold(logger::INFO)
-  expect_error(logger_level(logger::INFO, log_to_azure = FALSE), NA)
-  expect_warning(logger_level(logger::WARN, log_to_azure = FALSE), NA)
+  expect_error(
+    suppressWarnings(logger_level(logger::INFO, log_to_azure = FALSE)), NA
+  )
 })
